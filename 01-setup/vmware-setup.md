@@ -1,60 +1,58 @@
-# 01 - Setup: VMware Configuration
+# 🖥️ VMware Configuration – SIEM Lab
 
-## Step-by-Step VMware Setup
-
-### 1. Install VMware Workstation Player
-- Download from VMware official site
-- Install with admin privileges
+## 🎯 Objective
+Create a segmented virtual network that simulates a real-world SOC environment while maintaining proper connectivity for log ingestion.
 
 ---
 
-### 2. Create Virtual Networks
+## 🧱 Virtual Network Design
 
-#### Network Adapter Settings
-Go to:
-- Edit → Virtual Network Editor
+### VMnet1 – SIEM Network
+- Type: Host-Only
+- Subnet: 192.168.56.0/24
+- Purpose: SIEM infrastructure communication
 
-Create:
-
-### VMnet1 (SIEM Network)
-- Host-only
-- Subnet: 192.168.56.0
-
-### VMnet2 (Attack Network)
-- Host-only or NAT
-- Subnet: 192.168.70.0
+### VMnet2 – Attack Network
+- Type: Host-Only or NAT
+- Subnet: 192.168.70.0/24
+- Purpose: Attack simulation and log generation
 
 ---
 
-### 3. Assign VMs
+## 🖥️ Virtual Machine Configuration
 
-#### SIEM Server
-- VMnet1 (192.168.56.10)
-
-#### Target Machine
-- VMnet2 (192.168.70.128)
-
-#### Kali Linux
-- VMnet2 (same as target)
+### 🔐 SIEM Server (Elastic Stack)
+- Network Adapter 1:
+  - VMnet1 (192.168.56.10)
 
 ---
 
-### 4. Network Test
+### 🎯 Target Server (Log Source)
+- Network Adapter 1:
+  - VMnet2 (192.168.70.128)  ← receives attacks
+- Network Adapter 2:
+  - VMnet1 (192.168.56.30)   ← sends logs to SIEM
 
+---
+
+### ⚔️ Kali Linux (Attacker)
+- Network Adapter 1:
+  - VMnet2 (192.168.70.20)
+
+---
+
+## 🔄 Traffic Flow
+
+Kali (Attack Network)
+        ↓
+Target Server (Dual-Homed)
+        ↓
+SIEM Server (SIEM Network)
+
+---
+
+## 🔍 Connectivity Tests
+
+### Kali → Target
 ```bash
 ping 192.168.70.128
-ping 192.168.56.10
-```
-
----
-
-## Common VMware Issues
-
-### ❌ No internet in VM
-- Check NAT vs Host-only mode
-
-### ❌ No communication between VMs
-- Ensure same VMnet assignment
-
-### ❌ IP mismatch
-- Verify static IP config in `/etc/netplan/`
