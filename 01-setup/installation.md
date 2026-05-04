@@ -1,63 +1,87 @@
-# 01 - Setup: Installation (VMware Included)
+# 🧱 SIEM Lab Installation Guide — Elastic Stack
 
-## Overview
-This lab runs inside VMware Workstation / VMware Player.
-
-## Required Virtual Machines
-
-### 1. SIEM Server (Ubuntu Server / Debian)
-- Elasticsearch
-- Kibana
-- IP: 192.168.56.10
-
-### 2. Target Machine (Ubuntu)
-- Filebeat / Elastic Agent
-- IP: 192.168.70.128
-
-### 3. Attacker Machine (Kali Linux)
-- Tools: nmap, hydra, metasploit
-- Used for attack simulation
+## 🎯 Overview
+This guide provides the installation steps for setting up a SIEM lab using the Elastic Stack with a target machine and attacker machine in a VMware environment.
 
 ---
 
-## VMware Installation Steps
+# 🖥️ VMware Network Setup
 
-### Step 1: Install VMware
-- Download VMware Workstation Player
-- Install with default settings
-
-### Step 2: Create Virtual Networks
-
-#### Network 1 (SIEM Network)
-- Type: Host-Only
+## 🌐 Host-Only Network 1 — SIEM Network
 - Subnet: 192.168.56.0/24
-- SIEM Server connects here
+- Purpose: SIEM server (Elastic Stack)
 
-#### Network 2 (Lab Network)
-- Type: Host-Only or NAT
+## 🌐 Host-Only Network 2 — Attack Network
 - Subnet: 192.168.70.0/24
-- Target + Kali connect here
+- Purpose: Target + Attacker systems
 
 ---
 
-## VM Configuration
+# 🖥️ Virtual Machines
 
-### SIEM Server VM
-- 4 CPU / 8GB RAM recommended
-- 100GB disk
-- 2 NICs (optional advanced setup)
-
-### Target VM
-- 2 CPU / 4GB RAM
-- 1 NIC (192.168.70.128)
-
-### Kali VM
-- 2–4 CPU / 4–8GB RAM
-- 1 NIC (same network as target)
+- 🧠 SIEM Server (Ubuntu) → 192.168.56.10  
+- 🛡️ Target Server (Ubuntu) → 192.168.70.128  
+- ⚔️ Kali Linux (Attacker) → 192.168.70.50  
 
 ---
 
-## Validation
-- Ping between Kali → Target
-- Kibana reachable at:
-  http://192.168.56.10:5601
+# 🧠 Step 1 — Install SIEM Server (Elastic Stack)
+
+## Install Elasticsearch
+```bash
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.19.0-amd64.deb
+sudo dpkg -i elasticsearch-8.19.0-amd64.deb
+sudo systemctl enable elasticsearch
+sudo systemctl start elasticsearch
+
+#Install Kibana 
+
+wget https://artifacts.elastic.co/downloads/kibana/kibana-8.19.0-amd64.deb
+sudo dpkg -i kibana-8.19.0-amd64.deb
+sudo systemctl enable kibana
+sudo systemctl start kibana
+
+https://192.168.56.10:5601
+
+# 🧠 Step 2 — Install Target Server (Ubuntu)
+
+Install Elastic Agent
+curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.19.0-linux-x86_64.tar.gz
+tar xzvf elastic-agent-8.19.0-linux-x86_64.tar.gz
+cd elastic-agent-8.19.0-linux-x86_64
+
+Enroll Agent to Fleet
+sudo ./elastic-agent install \
+  --url=https://192.168.56.10:8220 \
+  --enrollment-token=<YOUR_TOKEN>
+
+
+Verify Agent Status
+
+On SIEM server (Kibana → Fleet):
+
+Ensure agent is Active
+Confirm logs are flowing
+
+⚔️ Step 3 — Attacker Machine (Kali Linux)
+sudo apt update
+sudo apt install nmap hydra netcat metasploit-framework -y
+
+Example Attacks
+Network Scan
+nmap -sS 192.168.70.128
+
+SSH Brute Force
+hydra -l root -P rockyou.txt ssh://192.168.70.128
+
+Step 4 — Verify SIEM Data
+Check Elasticsearch Indices
+curl -k -u elastic https://192.168.56.10:9200/_cat/indices?v
+
+
+Kibana Validation
+
+Open:
+
+https://192.168.56.10:5601
+
