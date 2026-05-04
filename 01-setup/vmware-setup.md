@@ -56,3 +56,10 @@ SIEM Server (SIEM Network)
 ### Kali → Target
 ```bash
 ping 192.168.70.128
+
+
+## 🧠 Resource Considerations
+
+- Elasticsearch is memory-intensive and performs best with ≥8 GB RAM
+- Insufficient memory may cause slow indexing or failed services
+- Disk space should allow for log growth during attack simulations
