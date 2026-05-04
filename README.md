@@ -1,24 +1,62 @@
-# 🛡️ Elastic SIEM Lab (CISSP-Aligned)
+# 🔐 Free SIEM Lab – Elastic Stack (CISSP Aligned)
 
-## Overview
-Home cybersecurity lab using Elastic Stack for SIEM monitoring, detection engineering, and attack simulation.
+## 🎯 Overview
+This project demonstrates a full Security Information and Event Management (SIEM) lab using the Elastic Stack.  
+It simulates real-world SOC operations including log ingestion, threat detection, attack simulation, and dashboard creation.
 
-## Components
-- Elasticsearch
-- Kibana
-- Filebeat / Elastic Agent
-- Linux / Windows endpoints
-
-## Features
-- Log ingestion
-- Attack simulation (Nmap, brute force, etc.)
-- Detection rules
-- Dashboards
-
-## Security Domains
+The lab is mapped to CISSP domains:
 - Security Operations
-- IAM
-- Network Security
-- Security Assessment
+- Security Assessment & Testing
+- Identity & Access Management
+- Communication & Network Security
 
-⚠️ Educational use only
+---
+
+## 🧱 Architecture
+
+- Kali Linux (Attacker VM)
+- Ubuntu Server (Target / Log Source)
+- Elastic Stack (SIEM Server: Elasticsearch + Kibana)
+- Filebeat / Elastic Agent for log shipping
+
+---
+
+## ⚔️ Attack Scenarios Simulated
+
+- SSH brute force (Hydra)
+- Network scanning (Nmap)
+- Failed login attempts
+- Privilege escalation attempts
+
+---
+
+## 📊 Detection Capabilities
+
+- Failed login detection
+- Port scan detection
+- Authentication anomaly tracking
+- System log monitoring
+
+---
+
+## 📁 Repository Structure
+See folders for full documentation of setup, ingestion, detections, and dashboards.
+
+---
+
+## 🧠 Skills Demonstrated
+
+- SIEM deployment (Elastic Stack)
+- Log ingestion and parsing
+- Security monitoring
+- Threat detection engineering
+- SOC dashboard design
+- Incident analysis
+
+---
+
+## 📌 Purpose
+Built as a cybersecurity home lab for:
+- CISSP knowledge reinforcement
+- SOC analyst skill development
+- Threat detection engineering practice
