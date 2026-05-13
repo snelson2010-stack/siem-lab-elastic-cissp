@@ -9,13 +9,7 @@ This document defines how security telemetry is collected, processed, normalized
 
 ### Flow Diagram
 
-
-flowchart LR
-A[Data Sources] --> B[Elastic Agent]
-B --> C[Ingest Pipelines]
-C --> D[ECS Normalization]
-D --> E[Elasticsearch Indices]
-E --> F[Kibana Dashboards & Alerts]
+![Ingestion Overview](/images/ingestion/ingestion-overview.png)
 1. Data Sources
 Linux authentication logs (/var/log/auth.log)
 SSH login attempts (success/failure)
