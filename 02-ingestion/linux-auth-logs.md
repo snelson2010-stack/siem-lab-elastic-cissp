@@ -1,170 +1,161 @@
-# Linux Authentication Log Ingestion
-
-## Overview
-
-This section documents how Linux authentication logs were collected and ingested into the Elastic Stack for security monitoring and detection engineering.
-
-Authentication logs are important because they contain evidence of:
-
-- Failed login attempts
-- Successful SSH logins
-- Privilege escalation activity
-- Invalid user enumeration
-- Brute force attacks
-
-These logs were forwarded into Elasticsearch using Elastic Agent / Filebeat and visualized in Kibana dashboards.
+# 🛡️ Linux Authentication Monitoring Lab  
+## SSH Authentication Logging & Brute Force Detection (Elastic Stack)
 
 ---
 
-# Log Source
+## 📌 1. Objective
 
-Primary log file monitored:
+This lab demonstrates centralized monitoring of SSH authentication activity on a Linux endpoint using the Elastic Stack.
 
-```bash
-/var/log/auth.log
-```
+A controlled authentication stress test was performed using Hydra to simulate repeated login attempts. The goal is to validate:
 
-Additional authentication-related logs may include:
+- Host-based authentication logging
+- SIEM ingestion via Elastic Agent
+- Detection visibility in Kibana
+- Log pipeline integrity and reliability
 
-```bash
-/var/log/secure
-```
-
----
-
-# Environment
-
-| Component | Purpose |
-|---|---|
-| Ubuntu Linux VM | Target system |
-| Kali Linux VM | Attack simulation |
-| Elastic Agent | Log collection |
-| Elasticsearch | Log storage |
-| Kibana | Visualization & analysis |
+This lab aligns with CISSP domains:
+- Security Operations (logging and monitoring)
+- Identity and Access Management (authentication controls)
+- Security Assessment and Testing
 
 ---
 
-# Elastic Agent Configuration
+## ⚔️ 2. Controlled Authentication Stress Test (Hydra)
 
-The Linux integration was configured in Kibana Fleet to collect authentication logs.
+![Hydra Brute Force](images/hydra-bruteforce-ssh.png)
 
-Enabled datasets:
+A controlled password-guessing simulation was executed against an SSH service (port 22) to generate authentication failure events for monitoring and analysis.
 
-- system.auth
-- system.syslog
+### Observations:
+- Multiple automated SSH login attempts were generated
+- Invalid credential combinations were tested
+- SSH service responded with repeated authentication failures
+- Behavior is consistent with brute force attack patterns
 
-The agent monitored:
-
-```bash
-/var/log/auth.log*
-```
+### Security Relevance:
+This test validates detection capabilities for:
+- Credential stuffing attempts
+- Brute force authentication behavior
+- Threshold-based alerting scenarios
 
 ---
 
-# Verifying Log Collection
+## 🐧 3. Host-Level Authentication Logging (Linux Endpoint)
 
-Logs were verified locally using:
+![Linux Auth Logs](images/linux-auth-log-terminal.png)
 
-```bash
-sudo tail -f /var/log/auth.log
-```
+The Linux endpoint generated authentication logs during the controlled test, capturing SSH access attempts in real time.
 
-Example authentication events:
+### Observations:
+- `Failed password` entries recorded in system logs
+- Repeated invalid username attempts detected
+- Multiple connection attempts over SSH (port 22)
+- Clear pattern of unauthorized authentication attempts
+
+### Security Relevance:
+This represents **audit logging at the endpoint level**, supporting:
+- Accountability and traceability of authentication events
+- Incident investigation and forensic analysis
+- Monitoring of unauthorized access attempts
+
+---
+
+## ⚙️ 4. Log Collection & Agent Health (Elastic Agent)
+
+![Elastic Agent Status](images/elastic-agent-status-healthy.png)
+
+Elastic Agent is operating in a **healthy state**, forwarding authentication logs from the Linux endpoint to Elasticsearch for centralized analysis.
+
+### Observations:
+- Agent status is active and healthy
+- Log forwarding is functioning normally
+- Authentication events are successfully ingested into SIEM
+- No disruption in telemetry pipeline observed
+
+### Security Relevance:
+This confirms:
+- Continuous log visibility from endpoint to SIEM
+- Reliable security monitoring pipeline
+- Integrity of authentication telemetry collection
+
+---
+
+## 📡 5. Log Flow Architecture
 
 ```text
-Failed password for invalid user fakeuser from 192.168.70.129 port 22 ssh2
-Accepted password for analyst from 192.168.70.129 port 22 ssh2
-```
+Linux SSH Authentication Events
+        ↓
+System Auth Logs (/var/log/auth.log)
+        ↓
+Elastic Agent (Log Forwarding)
+        ↓
+Elasticsearch (Central Storage & Indexing)
+        ↓
+Kibana (Visualization & Detection)
+Security Relevance:
 
----
+This represents a centralized logging architecture, essential for:
 
-# Verifying Data in Kibana
+Security monitoring and alerting
+Incident response investigations
+Compliance and audit requirements
+📊 6. Security Monitoring (Kibana Dashboard)
 
-Authentication logs were confirmed inside Kibana using Discover.
+(Insert Kibana dashboard screenshot here if available)
 
-Example KQL queries:
+Recommended visualizations:
 
-## All authentication logs
+Failed SSH login attempts over time
+Top source IP addresses attempting access
+Authentication success vs failure ratio
+Event frequency trends
+Security Relevance:
 
-```text
-data_stream.dataset : "system.auth"
-```
+Enables detection of:
 
-## Failed SSH logins
+Brute force attempts
+Suspicious authentication patterns
+Anomalous login behavior
+🚨 7. Key Findings
+Controlled SSH authentication stress test successfully generated log events
+Linux endpoint properly recorded authentication failures
+Elastic Agent is healthy and reliably forwarding logs
+SIEM provides centralized visibility into authentication activity
+Log pipeline integrity is essential for accurate detection
+🧠 8. Lessons Learned
+Centralized logging is critical for maintaining visibility into authentication activity across endpoints.
+Endpoint logs provide the authoritative source of authentication truth, while SIEM enables correlation and analysis.
+Log pipeline health (Elastic Agent status) directly impacts detection capability and visibility.
+Controlled attack simulation is effective for validating detection rules and alert thresholds.
+Authentication failures alone are not sufficient for incident confirmation; correlation improves accuracy.
+🔐 9. CISSP Domain Mapping
+🛡️ Domain 7: Security Operations
+Monitoring SSH authentication events
+SIEM-based log analysis and detection
+Ensuring log ingestion and pipeline reliability
+🔑 Domain 5: Identity and Access Management (IAM)
+SSH authentication monitoring
+Detection of repeated failed login attempts
+Unauthorized access identification
+🧪 Domain 6: Security Assessment and Testing
+Controlled brute force simulation (Hydra)
+Validation of logging and detection controls
+Testing SIEM rule effectiveness
+🏗️ Domain 3: Security Architecture and Engineering
+Centralized logging pipeline design (Linux → Agent → SIEM)
+Telemetry collection architecture
+Log integrity and system reliability assurance
+📡 Domain 4: Communication and Network Security (Secondary)
+SSH traffic monitoring over port 22
+Network-based authentication visibility
+🧠 10. Conclusion
 
-```text
-message : "Failed password"
-```
+This lab demonstrates effective implementation of centralized authentication monitoring using Elastic Stack.
 
-## Invalid user attempts
+Key outcomes:
 
-```text
-message : "invalid user"
-```
-
----
-
-# Security Value
-
-Linux authentication logs provide visibility into:
-
-- SSH brute force attacks
-- Unauthorized access attempts
-- Account misuse
-- Privilege escalation activity
-- Suspicious login behavior
-
-These logs are critical for SOC monitoring and incident detection.
-
----
-
-# Related Attack Simulations
-
-The following attack simulations generated authentication events:
-
-- SSH brute force attempts
-- Invalid username enumeration
-- Failed login testing
-- Privilege escalation using sudo
-
-These events were later used in custom detection rules and Kibana dashboards.
-
----
-
-# Related Detection Engineering
-
-Authentication logs were used to create:
-
-- Failed login detections
-- Brute force monitoring
-- Top attacker IP dashboards
-- Login anomaly visualizations
-
----
-
-# Screenshots
-
-## Kibana Discover View
-
-_Add screenshot here_
-
-## Failed Login Events
-
-_Add screenshot here_
-
-## Elastic Agent Status
-
-_Add screenshot here_
-
----
-
-# Lessons Learned
-
-During ingestion testing, several issues were identified and resolved:
-
-- Elastic Agent initially collected only syslog data
-- Authentication datasets needed to be enabled manually
-- Incorrect file paths prevented log ingestion
-- Kibana field mappings required validation
-
-Troubleshooting and validation improved understanding of SIEM data pipelines and Linux log analysis.
+Host-based logs successfully captured authentication events
+SIEM provided centralized visibility and analysis
+Log pipeline health is critical for security assurance
+Controlled testing validated detection readiness
