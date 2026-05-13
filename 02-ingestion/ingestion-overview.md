@@ -9,7 +9,7 @@ This document defines how security telemetry is collected, processed, normalized
 
 ### Flow Diagram
 
-```mermaid
+
 flowchart LR
 A[Data Sources] --> B[Elastic Agent]
 B --> C[Ingest Pipelines]
