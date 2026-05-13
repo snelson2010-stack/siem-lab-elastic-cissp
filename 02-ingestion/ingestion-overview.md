@@ -7,6 +7,8 @@ This document defines how security telemetry is collected, processed, normalized
 
 ## Ingestion Architecture
 
+### Flow Diagram
+
 ```mermaid
 flowchart LR
 A[Data Sources] --> B[Elastic Agent]
