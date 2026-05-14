@@ -115,17 +115,13 @@ message : "Accepted password"
 
 ---
 
-## Screenshots
+## Screenshot Evidence
 
-Add screenshots for evidence.
+### Elastic Agent Status
 
-```md
-![Elastic Agent Healthy](./screenshots/elastic-agent-healthy.png)
+This screenshot confirms that the target server is enrolled, connected, and reporting through Elastic Agent/Fleet.
 
-![Fleet Agent View](./screenshots/fleet-agent-view.png)
-
-![Authentication Events](./screenshots/kibana-auth-discover.png)
-```
+![Elastic Agent Status](screenshots/Elastic Agent Status.png)
 
 ---
 
