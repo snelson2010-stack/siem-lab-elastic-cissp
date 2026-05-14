@@ -182,20 +182,11 @@ Rule behavior:
 
 ## Screenshot Evidence
 
-Add screenshots for evidence after upload.
-
-Recommended screenshots:
-
-```text
-04-attack-simulations/image/hydra-bruteforce.png
-02-ingestion/image/linux-authlog-terminal.png
-02-ingestion/image/failed-ssh-logins.png.png
-03-detections/image/custom-ssh-bruteforce-alert.png.png
-```
+This file reuses existing evidence screenshots from ingestion and detection documentation to avoid duplicate image uploads.
 
 ### Hydra Output
 
-![Hydra Brute Force Output](image/hydra-bruteforce.png)
+![Hydra Brute Force Output](../02-ingestion/image/hydra-bruteforce.png.png)
 
 ### Failed SSH Events in Kibana
 
