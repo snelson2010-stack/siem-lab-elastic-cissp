@@ -9,7 +9,7 @@ This document defines how security telemetry is collected, processed, normalized
 
 ### Flow Diagram
 
-![Ingestion Overview](/images/ingestion/ingestion-overview.png)
+![Ingestion Overview](/image/ingestion/ingestion-overview.png)
 1. Data Sources
 Linux authentication logs (/var/log/auth.log)
 SSH login attempts (success/failure)
