@@ -186,15 +186,15 @@ This file reuses existing evidence screenshots from ingestion and detection docu
 
 ### Hydra Output
 
-![Hydra Brute Force Output](../02-ingestion/image/hydra-bruteforce.png.png)
+![Hydra Brute Force Output](../02-ingestion/image/hydra-bruteforce.png)
 
 ### Failed SSH Events in Kibana
 
-![Failed SSH Logins](../02-ingestion/image/failed-ssh-logins.png.png)
+![Failed SSH Logins](../02-ingestion/image/failed-ssh-logins.png)
 
 ### Detection Alert
 
-![Custom SSH Brute Force Alert](../03-detections/image/custom-ssh-bruteforce-alert.png.png)
+![Custom SSH Brute Force Alert](../03-detections/image/custom-ssh-bruteforce-alert.png)
 
 ---
 
