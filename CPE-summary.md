@@ -140,10 +140,16 @@ Built and documented a home SIEM lab using Elastic Stack, VMware, Kali Linux, an
 
 ## Supporting Repository
 
-Repository:
+Repository name:
 
 ```text
 siem-lab-elastic-cissp
+```
+
+GitHub repository link:
+
+```text
+https://github.com/snelson2010-stack/siem-lab-elastic-cissp
 ```
 
 Primary documentation files:
