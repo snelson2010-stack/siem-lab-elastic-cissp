@@ -24,6 +24,35 @@ The lab uses two VMware networks:
 
 ---
 
+## IP Configuration Evidence
+
+### SIEM Server IP
+
+The SIEM server is assigned to VMnet1 and uses `192.168.56.10` for Kibana, Elasticsearch, and log ingestion access.
+
+![SIEM IP Configuration](snapshots/04-siem-ip-config.jpg)
+
+---
+
+### Target Server IPs
+
+The target server is dual-homed with two interfaces:
+
+- `192.168.70.128` on VMnet2 for attack simulation traffic
+- `192.168.56.30` on VMnet1 for log forwarding to the SIEM server
+
+![Target IP Configuration](snapshots/05-target-ip-config.png)
+
+---
+
+### Kali Linux IP
+
+The Kali attacker machine is assigned to VMnet2 using `192.168.70.130`.
+
+![Kali IP Configuration](snapshots/06-kali-ip-config.jpg)
+
+---
+
 ## Which IP to Use
 
 ### Attack Target
@@ -100,6 +129,12 @@ Run from Kali:
 ping 192.168.70.128
 ```
 
+Evidence:
+
+![Kali to Target Connectivity](snapshots/07-kali-target-connectivity.png)
+
+---
+
 ### Target to SIEM
 
 Run from the target server:
@@ -107,6 +142,12 @@ Run from the target server:
 ```bash
 ping 192.168.56.10
 ```
+
+Evidence:
+
+![Target to SIEM Connectivity](snapshots/08-target-to-siem-connectivity.png)
+
+---
 
 ### Confirm Kali IP
 
@@ -121,6 +162,18 @@ Expected Kali attack-network IP:
 ```text
 192.168.70.130
 ```
+
+---
+
+## Screenshot Evidence Summary
+
+| Evidence | File |
+|---|---|
+| SIEM IP Configuration | `snapshots/04-siem-ip-config.jpg` |
+| Target IP Configuration | `snapshots/05-target-ip-config.png` |
+| Kali IP Configuration | `snapshots/06-kali-ip-config.jpg` |
+| Kali to Target Connectivity | `snapshots/07-kali-target-connectivity.png` |
+| Target to SIEM Connectivity | `snapshots/08-target-to-siem-connectivity.png` |
 
 ---
 
