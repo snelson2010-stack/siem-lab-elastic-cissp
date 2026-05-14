@@ -4,6 +4,8 @@
 
 Create a segmented virtual network that simulates a real-world SOC environment while maintaining proper connectivity for log ingestion, monitoring, and attack simulation.
 
+This document focuses specifically on VMware configuration, virtual networks, VM adapters, IP assignments, and basic connectivity validation.
+
 ---
 
 ## Virtual Network Design
@@ -21,13 +23,9 @@ Create a segmented virtual network that simulates a real-world SOC environment w
 
 | Adapter | Network | IP Address | Purpose |
 |---|---|---|---|
-| Adapter 1 | VMnet1 | `192.168.56.10` | Elasticsearch and Kibana access |
+| Adapter 1 | VMnet1 | `192.168.56.10` | SIEM server network access |
 
-The SIEM server hosts:
-
-- Elasticsearch
-- Kibana
-- Fleet Server, if used
+The SIEM server is placed on the SIEM network so it can receive logs from the target system.
 
 ![SIEM VM Elastic](snapshots/02-siem-vm-elastic.jpg)
 
@@ -52,7 +50,7 @@ The target server is dual-homed so it can receive attacks on the attack network 
 |---|---|---|---|
 | Adapter 1 | VMnet2 | `192.168.70.20` | Runs attack simulations |
 
-Kali is isolated to the attack network and is used to generate controlled security events.
+Kali is isolated to the attack network and is used to generate controlled security events against the target server.
 
 ![Kali VM](snapshots/01-kali-vm.jpg)
 
@@ -84,24 +82,23 @@ The Kali attacker machine is configured on the attack network.
 
 ---
 
-## Traffic Flow
+## VMware Traffic Flow
 
 ```text
 Kali Linux Attacker
-192.168.70.20
+VMnet2 / 192.168.70.20
         |
-        | SSH / Hydra / Nmap traffic
+        | Attack traffic
         v
 Target Server
-192.168.70.128
+VMnet2 / 192.168.70.128
+Target Server
+VMnet1 / 192.168.56.30
         |
-        | Elastic Agent log forwarding
+        | Log forwarding path
         v
 SIEM Server
-192.168.56.10
-        |
-        v
-Kibana Dashboards and Alerts
+VMnet1 / 192.168.56.10
 ```
 
 ---
@@ -144,60 +141,6 @@ SIEM server responds successfully.
 
 ---
 
-### Access Kibana
-
-From the host machine browser:
-
-```text
-https://192.168.56.10:5601
-```
-
-Expected result:
-
-```text
-Kibana login page loads.
-```
-
-![Kibana Login Page](snapshots/09-kibana-login-page.png)
-
----
-
-### Verify Fleet Agents
-
-In Kibana:
-
-```text
-Management → Fleet → Agents
-```
-
-Expected result:
-
-```text
-Elastic Agent appears connected and healthy.
-```
-
-![Fleet Agents Connected](snapshots/10-fleet-agents-connected.png)
-
----
-
-### Verify Elasticsearch Health
-
-From the SIEM server:
-
-```bash
-curl -k -u elastic https://192.168.56.10:9200
-```
-
-Expected result:
-
-```text
-Elasticsearch responds with cluster information or health status.
-```
-
-![Elasticsearch Health](snapshots/11-elasticsearch-health.png)
-
----
-
 ## Resource Considerations
 
 | System | Recommended RAM | Notes |
@@ -211,11 +154,11 @@ Additional notes:
 - Elasticsearch performs best with enough memory available.
 - Insufficient memory can cause slow indexing or failed services.
 - Disk space should allow for log growth during attack simulations.
-- Snapshots are recommended before major Elastic or network changes.
+- VMware snapshots are recommended before major Elastic or network changes.
 
 ---
 
-## Screenshot Evidence Summary
+## VMware Screenshot Evidence Summary
 
 | Evidence | File |
 |---|---|
@@ -227,9 +170,18 @@ Additional notes:
 | Kali IP Config | `snapshots/06-kali-ip-config.jpg` |
 | Kali to Target Connectivity | `snapshots/07-kali-target-connectivity.png` |
 | Target to SIEM Connectivity | `snapshots/08-target-to-siem-connectivity.png` |
-| Kibana Login Page | `snapshots/09-kibana-login-page.png` |
-| Fleet Agents Connected | `snapshots/10-fleet-agents-connected.png` |
-| Elasticsearch Health | `snapshots/11-elasticsearch-health.png` |
+
+---
+
+## Related Setup Evidence
+
+The following screenshots are part of the broader setup validation but are not VMware-specific:
+
+| Evidence | Recommended Documentation Location |
+|---|---|
+| Kibana Login Page | Elastic/Kibana setup documentation |
+| Fleet Agents Connected | Elastic Agent or ingestion documentation |
+| Elasticsearch Health | Elastic Stack validation documentation |
 
 ---
 
@@ -240,14 +192,14 @@ Additional notes:
 | Domain 3: Security Architecture and Engineering | Network segmentation and system design |
 | Domain 4: Communication and Network Security | Segmented network communication |
 | Domain 6: Security Assessment and Testing | Connectivity and control validation |
-| Domain 7: Security Operations | SIEM monitoring and log collection |
+| Domain 7: Security Operations | Supports SIEM monitoring and log collection |
 
 ---
 
 ## Notes
 
 - Attack traffic should target `192.168.70.128`.
-- Kibana should be accessed through `192.168.56.10`.
+- SIEM communication uses `192.168.56.10`.
 - Elastic Agent should send logs from the target server to the SIEM server.
 - VMnet1 and VMnet2 should not be mixed unless intentionally routing traffic.
 - The SIEM server should not be used as the attack target.
