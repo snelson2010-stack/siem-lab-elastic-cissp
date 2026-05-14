@@ -47,6 +47,7 @@ Before running the simulation:
 
 - SSH service was running on the Ubuntu target
 - Kali could reach the target on VMnet2
+- SSH port 22 was open on the target
 - Elastic Agent was healthy on the target server
 - Authentication logs were visible in Kibana
 - A small lab password list was created on Kali
@@ -61,11 +62,23 @@ From Kali Linux:
 ping 192.168.70.128
 ```
 
-Optional SSH test:
+Optional SSH port check:
+
+```bash
+nc -vz 192.168.70.128 22
+```
+
+Optional SSH login test:
 
 ```bash
 ssh fakeuser@192.168.70.128
 ```
+
+### SSH Port Evidence
+
+This screenshot confirms that Kali can reach the Ubuntu target SSH service on port 22.
+
+![SSH Port Open](image/ssh-port-open.png)
 
 ---
 
@@ -182,7 +195,7 @@ Rule behavior:
 
 ## Screenshot Evidence
 
-This file reuses existing evidence screenshots from ingestion and detection documentation to avoid duplicate image uploads.
+This file reuses existing evidence screenshots from ingestion and detection documentation to avoid duplicate image uploads where possible.
 
 ### Hydra Output
 
@@ -203,6 +216,8 @@ This file reuses existing evidence screenshots from ingestion and detection docu
 ```text
 Kali Linux
 192.168.70.130
+        ↓
+SSH port validation
         ↓
 Hydra SSH authentication attempts
         ↓
@@ -241,6 +256,7 @@ Kibana detection rule creates alert
 ## Lessons Learned
 
 - Controlled attack simulations are useful for validating SIEM visibility.
+- SSH service reachability should be confirmed before running authentication tests.
 - Hydra activity generated clear failed SSH authentication events.
 - Elastic Agent successfully forwarded authentication telemetry.
 - Kibana Discover confirmed event visibility.
