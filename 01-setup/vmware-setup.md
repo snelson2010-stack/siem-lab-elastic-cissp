@@ -29,6 +29,8 @@ The SIEM server hosts:
 - Kibana
 - Fleet Server, if used
 
+![SIEM VM Elastic](snapshots/02-siem-vm-elastic.jpg)
+
 ---
 
 ### Target Server — Log Source / Victim
@@ -40,6 +42,8 @@ The SIEM server hosts:
 
 The target server is dual-homed so it can receive attacks on the attack network while forwarding telemetry to the SIEM network.
 
+![Target VM Configuration](snapshots/03-target-vm-config.png)
+
 ---
 
 ### Kali Linux — Attacker
@@ -49,6 +53,34 @@ The target server is dual-homed so it can receive attacks on the attack network 
 | Adapter 1 | VMnet2 | `192.168.70.20` | Runs attack simulations |
 
 Kali is isolated to the attack network and is used to generate controlled security events.
+
+![Kali VM](snapshots/01-kali-vm.jpg)
+
+---
+
+## IP Configuration Evidence
+
+### SIEM IP Configuration
+
+The SIEM server is configured on the SIEM network using `192.168.56.10`.
+
+![SIEM IP Configuration](snapshots/04-siem-ip-config.jpg)
+
+---
+
+### Target IP Configuration
+
+The target server contains network connectivity for both attack traffic and SIEM log forwarding.
+
+![Target IP Configuration](snapshots/05-target-ip-config.png)
+
+---
+
+### Kali IP Configuration
+
+The Kali attacker machine is configured on the attack network.
+
+![Kali IP Configuration](snapshots/06-kali-ip-config.jpg)
 
 ---
 
@@ -90,6 +122,8 @@ Expected result:
 Target responds successfully.
 ```
 
+![Kali to Target Connectivity](snapshots/07-kali-target-connectivity.png)
+
 ---
 
 ### Target to SIEM Server
@@ -105,6 +139,8 @@ Expected result:
 ```text
 SIEM server responds successfully.
 ```
+
+![Target to SIEM Connectivity](snapshots/08-target-to-siem-connectivity.png)
 
 ---
 
@@ -122,9 +158,29 @@ Expected result:
 Kibana login page loads.
 ```
 
+![Kibana Login Page](snapshots/09-kibana-login-page.png)
+
 ---
 
-### Verify Elasticsearch
+### Verify Fleet Agents
+
+In Kibana:
+
+```text
+Management → Fleet → Agents
+```
+
+Expected result:
+
+```text
+Elastic Agent appears connected and healthy.
+```
+
+![Fleet Agents Connected](snapshots/10-fleet-agents-connected.png)
+
+---
+
+### Verify Elasticsearch Health
 
 From the SIEM server:
 
@@ -135,8 +191,10 @@ curl -k -u elastic https://192.168.56.10:9200
 Expected result:
 
 ```text
-Elasticsearch responds with cluster information or an authentication response.
+Elasticsearch responds with cluster information or health status.
 ```
+
+![Elasticsearch Health](snapshots/11-elasticsearch-health.png)
 
 ---
 
@@ -157,32 +215,21 @@ Additional notes:
 
 ---
 
-## Screenshot Evidence
+## Screenshot Evidence Summary
 
-Recommended screenshots for this section:
-
-```text
-images/
-├── vmware-vmnet1-config.png
-├── vmware-vmnet2-config.png
-├── siem-vm-network-adapter.png
-├── target-vm-network-adapters.png
-├── kali-vm-network-adapter.png
-├── target-to-siem-ping.png
-└── kali-to-target-ping.png
-```
-
-Example markdown:
-
-```md
-![VMnet1 Configuration](../images/vmware-vmnet1-config.png)
-
-![VMnet2 Configuration](../images/vmware-vmnet2-config.png)
-
-![Kali to Target Connectivity](../images/kali-to-target-ping.png)
-
-![Target to SIEM Connectivity](../images/target-to-siem-ping.png)
-```
+| Evidence | File |
+|---|---|
+| Kali VM | `snapshots/01-kali-vm.jpg` |
+| SIEM VM Elastic | `snapshots/02-siem-vm-elastic.jpg` |
+| Target VM Config | `snapshots/03-target-vm-config.png` |
+| SIEM IP Config | `snapshots/04-siem-ip-config.jpg` |
+| Target IP Config | `snapshots/05-target-ip-config.png` |
+| Kali IP Config | `snapshots/06-kali-ip-config.jpg` |
+| Kali to Target Connectivity | `snapshots/07-kali-target-connectivity.png` |
+| Target to SIEM Connectivity | `snapshots/08-target-to-siem-connectivity.png` |
+| Kibana Login Page | `snapshots/09-kibana-login-page.png` |
+| Fleet Agents Connected | `snapshots/10-fleet-agents-connected.png` |
+| Elasticsearch Health | `snapshots/11-elasticsearch-health.png` |
 
 ---
 
