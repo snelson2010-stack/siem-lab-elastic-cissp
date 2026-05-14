@@ -25,7 +25,7 @@ This document focuses specifically on VMware configuration, virtual networks, VM
 |---|---|---|---|
 | Adapter 1 | VMnet1 | `192.168.56.10` | SIEM server network access |
 
-The SIEM server is placed on the SIEM network so it can receive logs from the target system.
+The SIEM server is placed on VMnet1 so it can receive logs from the target system.
 
 ![SIEM VM Elastic](snapshots/02-siem-vm-elastic.jpg)
 
@@ -38,7 +38,7 @@ The SIEM server is placed on the SIEM network so it can receive logs from the ta
 | Adapter 1 | VMnet2 | `192.168.70.128` | Receives simulated attacks |
 | Adapter 2 | VMnet1 | `192.168.56.30` | Sends logs to SIEM |
 
-The target server is dual-homed so it can receive attacks on the attack network while forwarding telemetry to the SIEM network.
+The target server is dual-homed so it can receive attacks on VMnet2 while forwarding telemetry to the SIEM server on VMnet1.
 
 ![Target VM Configuration](snapshots/03-target-vm-config.png)
 
@@ -50,7 +50,7 @@ The target server is dual-homed so it can receive attacks on the attack network 
 |---|---|---|---|
 | Adapter 1 | VMnet2 | `192.168.70.20` | Runs attack simulations |
 
-Kali is isolated to the attack network and is used to generate controlled security events against the target server.
+Kali is isolated to VMnet2 and is used to generate controlled security events against the target server.
 
 ![Kali VM](snapshots/01-kali-vm.jpg)
 
@@ -92,6 +92,7 @@ VMnet2 / 192.168.70.20
         v
 Target Server
 VMnet2 / 192.168.70.128
+
 Target Server
 VMnet1 / 192.168.56.30
         |
@@ -160,6 +161,8 @@ Additional notes:
 
 ## VMware Screenshot Evidence Summary
 
+Only VMware-related evidence is included in this document.
+
 | Evidence | File |
 |---|---|
 | Kali VM | `snapshots/01-kali-vm.jpg` |
@@ -173,15 +176,15 @@ Additional notes:
 
 ---
 
-## Related Setup Evidence
+## Evidence Not Included Here
 
-The following screenshots are part of the broader setup validation but are not VMware-specific:
+The following screenshots are important, but they are not VMware-specific and should be documented in Elastic or ingestion files instead.
 
-| Evidence | Recommended Documentation Location |
+| Evidence | Better Location |
 |---|---|
-| Kibana Login Page | Elastic/Kibana setup documentation |
-| Fleet Agents Connected | Elastic Agent or ingestion documentation |
-| Elasticsearch Health | Elastic Stack validation documentation |
+| Kibana Login Page | `01-setup/elastic-stack-validation.md` |
+| Fleet Agents Connected | `02-ingestion/elastic-agent-status.md` |
+| Elasticsearch Health | `01-setup/elastic-stack-validation.md` |
 
 ---
 
