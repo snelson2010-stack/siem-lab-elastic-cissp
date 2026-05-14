@@ -77,26 +77,23 @@ message : "Failed password"
 
 ## Screenshot Evidence
 
-Add dashboard screenshots to:
+Dashboard screenshots are stored in:
 
 ```text
 05-dashboards/image/
 ```
 
-Recommended filenames:
+### All Authentication Events Over Time
 
-```text
-ssh-login-dashboard-table.png
-ssh-login-attempts-over-time.png
-```
+This dashboard visualizes successful and failed SSH authentication activity collected from the Ubuntu target server.
 
-### SSH Login Dashboard Table
+![All Authentication Events Over Time](image/all-auth-events-over-time.png)
 
-![SSH Login Dashboard Table](image/ssh-login-dashboard-table.png)
+### Top Attacking IP Dashboard
 
-### SSH Login Attempts Over Time
+This dashboard highlights the primary attacking source IP, failed SSH activity trends, and the usernames targeted during the brute force simulation.
 
-![SSH Login Attempts Over Time](image/ssh-login-attempts-over-time.png)
+![Top Attacking IP Dashboard](image/top-attacking-ip-dashboard.png)
 
 ---
 
