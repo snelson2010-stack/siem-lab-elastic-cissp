@@ -87,13 +87,13 @@ Dashboard screenshots are stored in:
 
 This dashboard visualizes successful and failed SSH authentication activity collected from the Ubuntu target server.
 
-![All Authentication Events Over Time](image/all-auth-events-over-time.png)
+![All Authentication Events Over Time](image/All-Authorization-event-over-time.png)
 
 ### Top Attacking IP Dashboard
 
 This dashboard highlights the primary attacking source IP, failed SSH activity trends, and the usernames targeted during the brute force simulation.
 
-![Top Attacking IP Dashboard](image/top-attacking-ip-dashboard.png)
+![Top Attacking IP Dashboard](image/Top-attacking%20ip.png)
 
 ---
 
