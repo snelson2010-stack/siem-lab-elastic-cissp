@@ -13,18 +13,35 @@ Failed login monitoring helps identify:
 
 ---
 
+## Lab Systems
+
+| System | Role | IP Address |
+|---|---|---|
+| Kali Linux | Attacker | `192.168.70.130` |
+| Ubuntu Target | Victim / Log Source | `192.168.70.128` |
+| Ubuntu Target | Log Forwarding Interface | `192.168.56.30` |
+| SIEM Server | Elasticsearch / Kibana | `192.168.56.10` |
+
+---
+
 ## Detection Logic
 
-### KQL Query
+### Primary parsed field query
+
+```kql
+system.auth.ssh.event : "Failed"
+```
+
+### Raw message fallback query
 
 ```kql
 message : "Failed password"
 ```
 
-Recommended scoped query:
+### Scoped authentication dataset query
 
 ```kql
-data_stream.dataset : "system.auth" and message : "Failed password"
+data_stream.dataset : "system.auth" and system.auth.ssh.event : "Failed"
 ```
 
 ---
@@ -35,11 +52,11 @@ Typical SSH authentication failures include:
 
 ```text
 Failed password for invalid user
+Failed password for analyst
 Failed password for root
-Failed password for admin
 ```
 
-These events are generated when attackers attempt invalid SSH logins against the target system.
+These events are generated when an attacker attempts invalid SSH logins against the target system.
 
 ---
 
@@ -48,7 +65,7 @@ These events are generated when attackers attempt invalid SSH logins against the
 The failed login events were generated from Kali Linux using:
 
 - SSH login attempts
-- Hydra brute force testing
+- controlled Hydra brute force testing
 
 Target system:
 
@@ -68,33 +85,71 @@ Attacker system:
 
 ### Failed SSH Login Events
 
-This screenshot shows failed SSH login events successfully ingested into Kibana.
+This screenshot shows failed SSH login events successfully ingested and visible in Kibana.
 
-![Failed SSH Logins](screenshots/failed-ssh-logins.png.png)
+![Failed SSH Logins](../02-ingestion/image/failed-ssh-logins.png.png)
+
+---
+
+## Alert Validation
+
+A custom detection rule successfully generated an alert after repeated failed SSH authentication events from Kali Linux.
+
+Validation details:
+
+| Field | Value |
+|---|---|
+| Rule name | `lab` |
+| Alert severity | High |
+| Source IP | `192.168.70.130` |
+| Validation location | Security → Alerts |
+| Alert reason | Event with source `192.168.70.130` created high alert |
+
+![Custom SSH Brute Force Alert](image/custom-ssh-bruteforce-alert.png)
+
+---
+
+## Detection Workflow
+
+```text
+Hydra / SSH activity from Kali
+        ↓
+Failed SSH log generated on Ubuntu target
+        ↓
+Elastic Agent collects authentication event
+        ↓
+Event indexed in Elasticsearch
+        ↓
+Kibana rule evaluates failed SSH activity
+        ↓
+Alert appears in Security → Alerts
+```
 
 ---
 
 ## Investigation Workflow
 
 ```text
-Failed login detected
+Alert generated
         ↓
 Review source IP
         ↓
 Review username targeted
         ↓
-Identify repeated attempts
+Check number of failed attempts
         ↓
-Determine possible brute force activity
+Determine brute force likelihood
+        ↓
+Document alert evidence
 ```
 
 ---
 
 ## MITRE ATT&CK Mapping
 
-| Technique | Description |
-|---|---|
-| T1110 | Brute Force |
+| Technique | Description | Lab Evidence |
+|---|---|---|
+| T1110 | Brute Force | Repeated SSH authentication failures from Kali |
 
 ---
 
@@ -104,12 +159,14 @@ Determine possible brute force activity
 |---|---|
 | Domain 5: Identity and Access Management | Authentication monitoring |
 | Domain 6: Security Assessment and Testing | Attack validation |
-| Domain 7: Security Operations | Detection and investigation |
+| Domain 7: Security Operations | Detection, alerting, and investigation |
 
 ---
 
 ## Notes
 
 - Elastic Agent collects Linux authentication logs from the target server.
+- Standalone Filebeat was not installed separately on the target system.
 - Authentication events are searchable in Kibana Discover.
+- The custom alert validated that failed SSH activity can generate SIEM alerts.
 - Failed login activity was intentionally generated inside the isolated VMware lab.
