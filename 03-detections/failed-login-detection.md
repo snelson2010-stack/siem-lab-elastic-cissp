@@ -46,6 +46,25 @@ data_stream.dataset : "system.auth" and system.auth.ssh.event : "Failed"
 
 ---
 
+## Custom Rule Configuration
+
+The custom Elastic Security rule was created as a threshold rule using the parsed SSH event field.
+
+| Setting | Value |
+|---|---|
+| Rule name | `lab` |
+| Rule type | `threshold` |
+| Rule query | `system.auth.ssh.event : "Failed"` |
+| Threshold field | `source.ip` |
+| Threshold value | `5` |
+| Rule interval | `5m` |
+| Lookback window | `now-6m` |
+| Alert severity | `high` |
+| Risk score | `73` |
+| Index | `logs-system.auth-default` |
+
+---
+
 ## Expected Events
 
 Typical SSH authentication failures include:
@@ -100,12 +119,47 @@ Validation details:
 | Field | Value |
 |---|---|
 | Rule name | `lab` |
-| Alert severity | High |
+| Rule type | `threshold` |
+| Alert severity | `high` |
+| Risk score | `73` |
 | Source IP | `192.168.70.130` |
 | Validation location | Security → Alerts |
-| Alert reason | Event with source `192.168.70.130` created high alert |
+| Alert reason | Event with source `192.168.70.130` created high alert `lab` |
+| Alert status | `open` |
 
 ![Custom SSH Brute Force Alert](image/custom-ssh-bruteforce-alert.png)
+
+---
+
+## Alert JSON Validation
+
+The generated alert confirms that the custom threshold rule matched repeated failed SSH authentication events from the Kali attacker IP.
+
+| Field | Value |
+|---|---|
+| Rule type | `threshold` |
+| Rule query | `system.auth.ssh.event : "Failed"` |
+| Threshold field | `source.ip` |
+| Threshold value | `5` |
+| Threshold result count | `8` |
+| Threshold result source | `192.168.70.130` |
+| Source IP | `192.168.70.130` |
+| Alert severity | `high` |
+| Risk score | `73` |
+| Source index | `logs-system.auth-default` |
+| Alert status | `open` |
+| Alert reason | `event with source 192.168.70.130 created high alert lab.` |
+
+Key fields validated:
+
+```text
+kibana.alert.rule.type = threshold
+kibana.alert.rule.parameters.query = system.auth.ssh.event : "Failed"
+kibana.alert.threshold_result.count = 8
+kibana.alert.threshold_result.terms.value = 192.168.70.130
+source.ip = 192.168.70.130
+kibana.alert.rule.indices = logs-system.auth-default
+```
 
 ---
 
