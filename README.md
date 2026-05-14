@@ -1,62 +1,169 @@
-# 🔐 Free SIEM Lab – Elastic Stack (CISSP Aligned)
+# Free SIEM Lab – Elastic Stack SOC Simulation
 
-## 🎯 Overview
-This project demonstrates a full Security Information and Event Management (SIEM) lab using the Elastic Stack.  
-It simulates real-world SOC operations including log ingestion, threat detection, attack simulation, and dashboard creation.
+## Overview
 
-The lab is mapped to CISSP domains:
-- Security Operations
-- Security Assessment & Testing
-- Identity & Access Management
-- Communication & Network Security
+This project demonstrates a Security Information and Event Management (SIEM) lab using the Elastic Stack.
 
----
+The lab simulates real-world SOC operations including:
 
-## 🧱 Architecture
+- VMware network segmentation
+- Linux log ingestion
+- Elastic Agent / Fleet enrollment
+- SSH authentication monitoring
+- Attack simulation
+- Detection engineering
+- Kibana dashboard creation
 
-- Kali Linux (Attacker VM)
-- Ubuntu Server (Target / Log Source)
-- Elastic Stack (SIEM Server: Elasticsearch + Kibana)
-- Filebeat / Elastic Agent for log shipping
+This project is designed for cybersecurity learning, SOC analyst practice, and CISSP domain reinforcement.
 
 ---
 
-## ⚔️ Attack Scenarios Simulated
+## Lab Architecture
 
-- SSH brute force (Hydra)
-- Network scanning (Nmap)
-- Failed login attempts
-- Privilege escalation attempts
+| System | Role | IP Address |
+|---|---|---|
+| SIEM Server | Elasticsearch / Kibana | `192.168.56.10` |
+| Target Server | Log Source / Victim | `192.168.70.128` |
+| Target Server | Log Forwarding Interface | `192.168.56.30` |
+| Kali Linux | Attacker | `192.168.70.130` |
 
 ---
 
-## 📊 Detection Capabilities
+## Network Design
+
+| Network | Subnet | Purpose |
+|---|---|---|
+| VMnet1 | `192.168.56.0/24` | SIEM infrastructure and log forwarding |
+| VMnet2 | `192.168.70.0/24` | Attack simulation network |
+
+---
+
+## Data Flow
+
+```text
+Kali Linux Attacker
+192.168.70.130
+        ↓
+Ubuntu Target Server
+192.168.70.128
+        ↓
+Elastic Agent
+192.168.56.30
+        ↓
+Elastic SIEM Server
+192.168.56.10
+        ↓
+Elasticsearch → Kibana → Dashboards → Detections
+```
+
+---
+
+## Attack Scenarios Simulated
+
+- SSH failed login attempts
+- SSH brute force simulation using Hydra
+- Network scanning using Nmap
+- Privilege escalation monitoring
+- Suspicious authentication activity
+
+---
+
+## Detection Capabilities
 
 - Failed login detection
-- Port scan detection
+- SSH brute force monitoring
 - Authentication anomaly tracking
-- System log monitoring
+- Source IP analysis
+- Linux system log monitoring
+- Dashboard-based investigation
 
 ---
 
-## 📁 Repository Structure
-See folders for full documentation of setup, ingestion, detections, and dashboards.
+## Repository Structure
+
+```text
+01-setup/
+├── architecture.md
+├── installation.md
+├── ip-assignment-plan.md
+├── vm-ip-plan.md
+├── vmware-setup.md
+└── snapshots/
+
+02-ingestion/
+├── ingestion-overview.md
+├── linux-auth-log.md
+├── pipeline-validation.md
+├── elastic-agent-status.md
+└── ecs-field-mapping.md
+
+03-detections/
+04-attack-simulations/
+05-dashboards/
+06-architecture/
+07-troubleshooting/
+```
 
 ---
 
-## 🧠 Skills Demonstrated
+## CISSP Domain Alignment
 
-- SIEM deployment (Elastic Stack)
-- Log ingestion and parsing
-- Security monitoring
+| CISSP Domain | Lab Relevance |
+|---|---|
+| Domain 3: Security Architecture and Engineering | Network segmentation and secure lab design |
+| Domain 4: Communication and Network Security | Segmented VMnet traffic and controlled communication |
+| Domain 5: Identity and Access Management | SSH authentication monitoring |
+| Domain 6: Security Assessment and Testing | Simulated attacks and validation testing |
+| Domain 7: Security Operations | SIEM monitoring, dashboards, and detection workflows |
+
+---
+
+## MITRE ATT&CK Mapping
+
+| Technique | Description | Lab Example |
+|---|---|---|
+| T1110 | Brute Force | Hydra SSH brute force simulation |
+| T1046 | Network Service Discovery | Nmap scan against target server |
+| T1078 | Valid Accounts | Monitoring successful SSH logins |
+| T1059 | Command and Scripting Interpreter | Linux command activity and sudo monitoring |
+
+---
+
+## Skills Demonstrated
+
+- Elastic Stack deployment
+- VMware network segmentation
+- Elastic Agent / Fleet configuration
+- Linux authentication log monitoring
+- SIEM log ingestion validation
+- Kibana dashboard development
 - Threat detection engineering
-- SOC dashboard design
-- Incident analysis
+- SOC-style investigation workflow
+- CISSP domain application
 
 ---
 
-## 📌 Purpose
-Built as a cybersecurity home lab for:
-- CISSP knowledge reinforcement
-- SOC analyst skill development
-- Threat detection engineering practice
+## Project Status
+
+Completed areas:
+
+- VMware lab setup
+- IP assignment documentation
+- Elastic Stack installation documentation
+- Setup screenshots
+- Linux authentication log ingestion documentation
+- Elastic Agent status documentation
+- ECS field mapping documentation
+
+In progress:
+
+- Detection rules
+- Attack simulation documentation
+- Kibana dashboards
+- Troubleshooting playbooks
+
+---
+
+## Disclaimer
+
+This lab is for educational and cybersecurity training purposes only. All testing is performed in an isolated VMware environment owned and controlled by the lab operator.
