@@ -215,6 +215,32 @@ data_stream.dataset : "system.auth"
 
 ---
 
+## Installation Evidence
+
+### Kibana Login Page
+
+This screenshot confirms that Kibana is installed and reachable from the lab network.
+
+![Kibana Login Page](snapshots/09-kibana-login-page.png)
+
+---
+
+### Fleet Agents Connected
+
+This screenshot confirms that the target system successfully enrolled with Fleet and the Elastic Agent is connected.
+
+![Fleet Agents Connected](snapshots/10-fleet-agents-connected.png)
+
+---
+
+### Elasticsearch Health
+
+This screenshot confirms that Elasticsearch is running and responding.
+
+![Elasticsearch Health](snapshots/11-elasticsearch-health.png)
+
+---
+
 ## Validation Checklist
 
 | Check | Expected Result |
