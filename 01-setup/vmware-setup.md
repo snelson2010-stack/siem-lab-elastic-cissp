@@ -48,7 +48,7 @@ The target server is dual-homed so it can receive attacks on VMnet2 while forwar
 
 | Adapter | Network | IP Address | Purpose |
 |---|---|---|---|
-| Adapter 1 | VMnet2 | `192.168.70.20` | Runs attack simulations |
+| Adapter 1 | VMnet2 | `192.168.70.130` | Runs attack simulations |
 
 Kali is isolated to VMnet2 and is used to generate controlled security events against the target server.
 
@@ -76,7 +76,7 @@ The target server contains network connectivity for both attack traffic and SIEM
 
 ### Kali IP Configuration
 
-The Kali attacker machine is configured on the attack network.
+The Kali attacker machine is configured on the attack network using `192.168.70.130`.
 
 ![Kali IP Configuration](snapshots/06-kali-ip-config.jpg)
 
@@ -86,7 +86,7 @@ The Kali attacker machine is configured on the attack network.
 
 ```text
 Kali Linux Attacker
-VMnet2 / 192.168.70.20
+VMnet2 / 192.168.70.130
         |
         | Attack traffic
         v
@@ -201,6 +201,7 @@ The following screenshots are important, but they are not VMware-specific and sh
 
 ## Notes
 
+- Attack traffic should originate from Kali at `192.168.70.130`.
 - Attack traffic should target `192.168.70.128`.
 - SIEM communication uses `192.168.56.10`.
 - Elastic Agent should send logs from the target server to the SIEM server.
