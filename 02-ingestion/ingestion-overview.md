@@ -1,7 +1,10 @@
 # Ingestion Overview
 
 ## Purpose
-This document defines how security telemetry is collected, processed, normalized, and prepared for analysis within an Elastic SIEM environment. The goal is to ensure consistent, high-quality, and queryable data for detection engineering, incident response, and SOC monitoring.
+
+This document defines how security telemetry is collected, processed, normalized, and prepared for analysis within the Elastic SIEM lab.
+
+The goal is to ensure that Linux authentication events are collected consistently, searchable in Kibana, and usable for detection engineering, dashboards, and incident investigation.
 
 ---
 
@@ -9,92 +12,203 @@ This document defines how security telemetry is collected, processed, normalized
 
 ### Flow Diagram
 
-![Ingestion Overview](image/ingestion/ingestion-overview.png)
-1. Data Sources
-Linux authentication logs (/var/log/auth.log)
-SSH login attempts (success/failure)
-System security events
-Future: Windows logs, firewall logs, DNS logs
-2. Elastic Agent Collection
-Collects endpoint logs
-Sends telemetry to Elasticsearch
-Applies System/Security integrations
-Managed via Elastic Fleet
-3. Ingestion Pipeline
-Raw Log → Parsing → Field Extraction → ECS Mapping → Indexing
-Parses unstructured logs
-Extracts security fields
-Normalizes structure
-Handles malformed events
-4. ECS Field Mapping (SSH Example)
-Raw Field	ECS Field
-src_ip	source.ip
-username	user.name
-timestamp	@timestamp
-auth result	event.outcome
-ssh event	event.action
-5. Pipeline Validation
+![Ingestion Overview](screenshots/ingestion-overview.png)
 
-KQL Checks:
+```text
+Kali Linux Attack Activity
+        ↓
+Ubuntu Target Server
+        ↓
+Linux authentication and system logs
+        ↓
+Elastic Agent / Fleet
+        ↓
+Elasticsearch
+        ↓
+Kibana Discover / Dashboards / Detections
+```
 
-system.auth.ssh.event: "Accepted"
-system.auth.ssh.event: "Failed"
+---
 
-Validation checks:
+## Data Sources
 
-Correct indexing (logs-*)
-ECS fields populated
-No pipeline errors
-Accurate timestamps
-Correct IP extraction
-6. Index Output
-logs-system.auth-*
-logs-ssh-*
+The current ingestion focus is Linux authentication telemetry from the Ubuntu target server.
 
-Used for:
+Collected event types include:
 
-Dashboards
-Detection rules
-Incident response
-Threat hunting
-7. SOC Use Cases
-Authentication monitoring
-Brute force detection
-Centralized log analysis
-Incident investigation
-Compliance auditing
-8. CISSP Domain Alignment
+- SSH failed login attempts
+- SSH successful login attempts
+- Invalid user attempts
+- Sudo activity
+- Linux system security events
+
+Future expansion may include:
+
+- Windows event logs
+- Firewall logs
+- DNS logs
+- Endpoint security telemetry
+
+---
+
+## Collection Method
+
+The target server uses **Elastic Agent enrolled in Fleet**.
+
+Standalone Filebeat was not installed separately on the target system.
+
+Elastic Agent collects Linux system and authentication logs and forwards them to Elasticsearch for indexing and analysis.
+
+---
+
+## Ingestion Pipeline
+
+```text
+Raw Linux log
+        ↓
+Elastic Agent collection
+        ↓
+Parsing and field extraction
+        ↓
+ECS normalization
+        ↓
+Elasticsearch indexing
+        ↓
+Kibana search and visualization
+```
+
+The ingestion pipeline helps:
+
+- parse unstructured Linux logs
+- extract useful security fields
+- normalize events into Elastic Common Schema
+- make events searchable for detections and dashboards
+
+---
+
+## SSH Event Field Validation
+
+The lab uses the parsed SSH event field shown in Kibana:
+
+```text
+system.auth.ssh.event
+```
+
+This field is used to identify SSH authentication outcomes.
+
+### Failed SSH events
+
+```kql
+system.auth.ssh.event : "Failed"
+```
+
+### Accepted SSH events
+
+```kql
+system.auth.ssh.event : "Accepted"
+```
+
+---
+
+## Additional Validation Queries
+
+Parsed SSH fields are the preferred validation method when available. Raw message queries are also useful as a fallback.
+
+### Failed password messages
+
+```kql
+message : "Failed password"
+```
+
+### Invalid user attempts
+
+```kql
+message : "invalid user"
+```
+
+### Authentication dataset
+
+```kql
+data_stream.dataset : "system.auth"
+```
+
+---
+
+## ECS Field Mapping Example
+
+| Raw Log Element | ECS / Elastic Field | Purpose |
+|---|---|---|
+| Timestamp | `@timestamp` | Time of event |
+| Source IP | `source.ip` | Attacking or connecting host |
+| Username | `user.name` | Account involved in authentication |
+| SSH result | `system.auth.ssh.event` | SSH event result such as Failed or Accepted |
+| Raw event text | `message` | Original log message |
+| Hostname | `host.name` | System that generated the event |
+
+---
+
+## Pipeline Validation Checks
+
+Validation confirms that:
+
+- authentication logs are collected from the target server
+- events are indexed in Elasticsearch
+- SSH fields are visible in Kibana
+- `system.auth.ssh.event` is populated
+- timestamps are accurate
+- events can support dashboards and detection rules
+
+---
+
+## Index Output
+
+Authentication data may appear in Elastic data streams or indices related to Linux system logs, depending on the integration and version.
+
+Useful searches include:
+
+```kql
+data_stream.dataset : "system.auth"
+```
+
+or:
+
+```kql
+system.auth.ssh.event : "Failed"
+```
+
+---
+
+## SOC Use Cases
+
+This ingestion pipeline supports:
+
+- authentication monitoring
+- brute force detection
+- failed login investigation
+- centralized log analysis
+- incident response
+- compliance auditing
+- dashboard creation
+
+---
 
 ## CISSP Domain Alignment
 
-**Domain 3 – Security Architecture & Engineering**
-- Ingestion pipeline design
-- ECS normalization model
+| CISSP Domain | Relevance |
+|---|---|
+| Domain 3: Security Architecture and Engineering | Ingestion pipeline design and ECS normalization |
+| Domain 5: Identity and Access Management | SSH authentication monitoring and user activity tracking |
+| Domain 6: Security Assessment and Testing | Pipeline validation using KQL and controlled test activity |
+| Domain 7: Security Operations | Continuous monitoring, alerting, dashboards, and incident response support |
+| Domain 8: Software Development Security | Structured parsing, field extraction, and data integrity validation |
 
-**Domain 5 – Identity & Access Management**
-- SSH authentication monitoring
-- User behavior tracking
+---
 
-**Domain 6 – Security Assessment & Testing**
-- Pipeline validation using KQL
-- Log integrity verification
+## Lessons Learned
 
-**Domain 7 – Security Operations**
-- Continuous monitoring
-- Alerting and dashboards
-- Incident response support
-
-**Domain 8 – Software Development Security**
-- Secure parsing and processing of log data through ingest pipelines  
-- Validation of structured data before indexing  
-- Prevention of malformed or malicious log injection through controlled field extraction  
-- Ensuring data integrity through ECS normalization and pipeline testing  
-
-Continuous monitoring
-Alerting and dashboards
-Incident response support
-9. Lessons Learned
-ECS consistency is critical for correlation
-Misconfigured fields break detections silently
-SSH logs provide high-value attack signals
-Validate ingestion before building dashboards
+- ECS consistency is critical for correlation.
+- Misconfigured fields can break detections silently.
+- SSH logs provide high-value attack signals.
+- Parsed fields such as `system.auth.ssh.event` are useful for cleaner detections.
+- Raw `message` searches are helpful fallback queries.
+- Ingestion should be validated before building dashboards or detection rules.
