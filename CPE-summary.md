@@ -27,17 +27,17 @@ Self-study / professional development / cybersecurity lab project
 |---|---:|
 | VMware lab setup and network segmentation | 4 |
 | Elastic Stack installation and configuration | 3 |
-| Elastic Agent / Fleet ingestion setup and troubleshooting | 5 |
-| Linux authentication log validation | 2 |
+| Elastic Agent / Fleet ingestion setup and troubleshooting | 7 |
+| Linux authentication log validation | 3 |
 | SSH brute force attack simulation | 2 |
 | Custom detection rule and alert validation | 3 |
-| Kibana dashboard creation and documentation | 1 |
-| Total | 20 |
+| Kibana dashboard creation and documentation | 2 |
+| Total | 24 |
 
 Suggested reported total:
 
 ```text
-20 CPE hours
+24 CPE hours
 ```
 
 > Note: CPE hours should reflect the actual time spent completing and documenting the activity.
