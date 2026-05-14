@@ -121,7 +121,7 @@ message : "Accepted password"
 
 This screenshot confirms that the target server is enrolled, connected, and reporting through Elastic Agent/Fleet.
 
-![Elastic Agent Status](image/Elastic Agent Status.png)
+![Elastic Agent Status](image/Elastic%20Agent%20Status.png)
 
 ---
 
