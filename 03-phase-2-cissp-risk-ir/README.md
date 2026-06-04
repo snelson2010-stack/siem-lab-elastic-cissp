@@ -97,6 +97,34 @@ New work completed during Phase 2 includes:
 
 ---
 
+# Evidence
+
+| Evidence | Link |
+|---|---|
+| Windows Enterprise VM Evidence Summary | [windows-enterprise-vm-evidence.md](windows-enterprise-vm-evidence.md) |
+| Screenshot Evidence Index | [screenshots/evidence-index.md](screenshots/evidence-index.md) |
+| Elastic Agent Healthy in PowerShell | [windows-agent-powershell-healthy.png](screenshots/windows-agent-powershell-healthy.png) |
+| Windows Endpoint Healthy in Fleet | [fleet-windows-agent-healthy.png](screenshots/fleet-windows-agent-healthy.png) |
+| Windows Failed Logon Event ID 4625 | [phase-2-windows-failed-logon-4625-discover.png](screenshots/phase-2-windows-failed-logon-4625-discover.png) |
+| Nmap-Related Windows Network Events | [phase-2-nmap-related-windows-network-events.png](screenshots/phase-2-nmap-related-windows-network-events.png) |
+| Windows Agent Policy or Details | [windows-agent-policy-or-agent-details.png](screenshots/windows-agent-policy-or-agent-details.png) |
+
+## Key Evidence Screenshots
+
+### Windows Endpoint Healthy in Fleet
+
+![Windows endpoint healthy in Fleet](screenshots/fleet-windows-agent-healthy.png)
+
+### Failed Windows Logon Event ID 4625
+
+![Windows failed logon Event ID 4625](screenshots/phase-2-windows-failed-logon-4625-discover.png)
+
+### Nmap-Related Windows Network Events
+
+![Nmap-related Windows network events](screenshots/phase-2-nmap-related-windows-network-events.png)
+
+---
+
 # CISSP Domain Alignment
 
 ## Domain 1 – Security & Risk Management
@@ -136,26 +164,21 @@ New work completed during Phase 2 includes:
 
 ## Incident Response
 
-- SSH Brute Force Playbook
-- Port Scan Response Playbook
-- Privilege Escalation Response Playbook
+- [SSH Brute Force Playbook](incident-response/brute-force-incident-playbook.md)
+- [Port Scan / Nmap Response Playbook](incident-response/nmap-scan-incident-playbook.md)
+- [Privilege Escalation Response Playbook](incident-response/privilege-escalation-playbook.md)
 
 ## Risk Management
 
-- Risk Register
-- Risk Analysis Documentation
+- [Risk Register](risk-management/risk-register.md)
 
 ## Security Governance
 
-- Acceptable Use Policy
-- Logging & Monitoring Policy
-- Access Control Policy
-- Incident Response Policy
+- [Logging & Monitoring Policy](security-governance/logging-monitoring-policy.md)
 
 ## CISSP Mapping
 
-- Detection-to-Control Matrix
-- CISSP Domain Mapping Matrix
+- [Detection-to-Control Matrix](cissp-mapping/detection-control-matrix.md)
 
 ---
 
@@ -171,18 +194,6 @@ New work completed during Phase 2 includes:
 - Threat Detection
 - Security Operations
 - CISSP Domain Mapping
-
----
-
-# Suggested Screenshot Evidence
-
-Add screenshots under this phase showing:
-
-- Windows Enterprise VM network configuration
-- Elastic Agent installed on Windows
-- Windows endpoint enrolled in Fleet
-- Windows security events visible in Kibana
-- Failed login event or other Windows security event
 
 ---
 
