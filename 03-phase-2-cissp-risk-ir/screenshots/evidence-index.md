@@ -17,7 +17,6 @@ This document explains the screenshots collected for Phase 2 of the CISSP Risk M
 | Windows network events in Kibana Discover | [phase-2-nmap-related-windows-network-events.png](phase-2-nmap-related-windows-network-events.png) | Shows Windows endpoint network telemetry during Nmap-related testing from the Kali source IP | Domain 4: Communication and Network Security; Domain 6: Security Assessment and Testing; Domain 7: Security Operations |
 | Windows authentication monitoring dashboard | [phase-2-windows-authentication-dashboard.png](phase-2-windows-authentication-dashboard.png) | Shows dashboard panels for failed logons, successful logons, user logons, authentication trends, and event categories | Domain 5: Identity and Access Management; Domain 7: Security Operations |
 | Windows network monitoring dashboard | [phase-2-windows-network-monitoring-dashboard.png](phase-2-windows-network-monitoring-dashboard.png) | Shows dashboard view of Windows network telemetry and Kali-source network activity | Domain 4: Communication and Network Security; Domain 6: Security Assessment and Testing; Domain 7: Security Operations |
-| Windows agent details or policy evidence | [windows-agent-policy-or-agent-details.png](windows-agent-policy-or-agent-details.png) | Shows the Windows endpoint policy, integrations, or agent details used for log collection | Domain 6: Security Assessment and Testing; Domain 7: Security Operations |
 
 ---
 
@@ -189,25 +188,6 @@ This dashboard supports network telemetry review, reconnaissance analysis, and v
 - Network monitoring
 - Reconnaissance review
 - Detection validation
-
----
-
-## Evidence 8: Windows Agent Policy or Agent Details
-
-![Windows agent policy or agent details](windows-agent-policy-or-agent-details.png)
-
-This screenshot should show the Windows endpoint details, agent policy, integrations, last check-in, or other Fleet details.
-
-### Security Value
-
-This supports the configuration side of the project and shows how the Windows endpoint is managed within the SIEM environment.
-
-### CISSP Relevance
-
-- Domain 6: Security Assessment and Testing
-- Domain 7: Security Operations
-- Configuration validation
-- Control testing
 
 ---
 
