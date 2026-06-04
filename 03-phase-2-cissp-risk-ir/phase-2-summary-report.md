@@ -209,7 +209,7 @@ These findings are documented in the [Risk Register](risk-management/risk-regist
 
 This Phase 2 expansion supports Group A CISSP continuing education because it maps directly to CISSP security domains and required professional knowledge areas.
 
-Reasonable CPE/CEU justification areas include:
+Relevant activity areas include:
 
 - Windows endpoint monitoring
 - Authentication event analysis
@@ -219,18 +219,6 @@ Reasonable CPE/CEU justification areas include:
 - Detection-to-control mapping
 - Security operations evidence collection
 - SIEM detection validation
-
-Estimated credit range:
-
-```text
-10–20 Group A CPEs, depending on actual time spent
-```
-
-A conservative submission would be:
-
-```text
-12–15 Group A CPEs
-```
 
 Only actual time spent performing and documenting the Phase 2 work should be claimed.
 
