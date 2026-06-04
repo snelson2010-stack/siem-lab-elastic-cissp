@@ -4,7 +4,7 @@
 
 Phase 2 expands the original Elastic SIEM lab into a CISSP-aligned Security Operations, Risk Management, and Incident Response project.
 
-The original lab focused on building the Elastic Stack environment, ingesting logs, creating dashboards, and simulating attacks. Phase 2 builds on that foundation by adding a Windows Enterprise VM as a new monitored endpoint and using the SIEM to support authentication monitoring, network telemetry review, incident response documentation, risk management, governance, and CISSP domain mapping.
+The original lab focused on building the Elastic Stack environment, ingesting logs, creating dashboards, and simulating attacks. Phase 2 builds on that foundation by adding a Windows Enterprise VM as a new monitored endpoint and using the SIEM to support authentication monitoring, network telemetry review, dashboard creation, incident response documentation, risk management, governance, and CISSP domain mapping.
 
 This phase demonstrates how technical monitoring supports security governance and operational decision-making.
 
@@ -15,7 +15,7 @@ This phase demonstrates how technical monitoring supports security governance an
 | Phase | Focus | Summary |
 |---|---|---|
 | Phase 1 | Elastic SIEM Build | Built the Elastic SIEM lab, configured ingestion, and created initial visibility into lab activity |
-| Phase 2 | CISSP Risk & Incident Response Expansion | Added Windows endpoint monitoring, incident response playbooks, risk register, governance policy, evidence index, and CISSP control mapping |
+| Phase 2 | CISSP Risk & Incident Response Expansion | Added Windows endpoint monitoring, dashboards, incident response playbooks, risk register, governance policy, evidence index, and CISSP control mapping |
 
 Phase 2 does not repeat the original SIEM installation. It uses the existing SIEM lab as a foundation for higher-level security operations and risk management work.
 
@@ -31,6 +31,7 @@ The major new technical asset added during Phase 2 was a Windows Enterprise VM.
 | Elastic Agent | Endpoint telemetry and log collection |
 | Fleet | Centralized agent management |
 | Kibana Discover | Event search and investigation |
+| Kibana Dashboards | Authentication and network monitoring |
 | Elasticsearch | Event storage and indexing |
 
 Evidence:
@@ -49,6 +50,8 @@ Evidence:
 | Windows failed logon Event ID 4625 | [phase-2-windows-failed-logon-4625-discover.png](screenshots/phase-2-windows-failed-logon-4625-discover.png) |
 | Windows successful logon Event ID 4624 | [phase-2-windows-successful-logon-4624-discover.png](screenshots/phase-2-windows-successful-logon-4624-discover.png) |
 | Nmap-related Windows network telemetry | [phase-2-nmap-related-windows-network-events.png](screenshots/phase-2-nmap-related-windows-network-events.png) |
+| Windows authentication monitoring dashboard | [phase-2-windows-authentication-dashboard.png](screenshots/phase-2-windows-authentication-dashboard.png) |
+| Windows network monitoring dashboard | [phase-2-windows-network-monitoring-dashboard.png](screenshots/phase-2-windows-network-monitoring-dashboard.png) |
 | Windows agent policy or details | [windows-agent-policy-or-agent-details.png](screenshots/windows-agent-policy-or-agent-details.png) |
 
 ---
@@ -67,9 +70,17 @@ Evidence:
 
 ![Successful Windows logon Event ID 4624](screenshots/phase-2-windows-successful-logon-4624-discover.png)
 
+### Windows Authentication Monitoring Dashboard
+
+![Windows authentication monitoring dashboard](screenshots/phase-2-windows-authentication-dashboard.png)
+
 ### Nmap-Related Windows Network Telemetry
 
 ![Nmap-related Windows network events](screenshots/phase-2-nmap-related-windows-network-events.png)
+
+### Windows Network Monitoring Dashboard
+
+![Windows network monitoring dashboard](screenshots/phase-2-windows-network-monitoring-dashboard.png)
 
 ---
 
@@ -120,7 +131,26 @@ Related evidence:
 
 ---
 
-### 4. Nmap-Related Network Telemetry Review
+### 4. Windows Authentication Dashboard Creation
+
+A Windows authentication monitoring dashboard was created to provide a SOC-style view of Windows account activity.
+
+The dashboard includes panels for:
+
+- Failed Windows logons
+- Successful Windows logons
+- Actual user logons
+- Top Windows authentication users
+- Authentication events over time
+- Windows event categories
+
+Related evidence:
+
+- [Windows Authentication Dashboard](screenshots/phase-2-windows-authentication-dashboard.png)
+
+---
+
+### 5. Nmap-Related Network Telemetry Review
 
 Nmap-related testing was performed from Kali against the Windows Enterprise VM. Kibana Discover was used to review Windows endpoint network telemetry associated with the Kali source IP.
 
@@ -139,7 +169,17 @@ This testing identified a visibility gap: not every scan probe appeared as a sep
 
 ---
 
-### 5. Agent Health Monitoring
+### 6. Windows Network Monitoring Dashboard Creation
+
+A Windows network monitoring dashboard was created to provide a visual view of endpoint network telemetry and support reconnaissance review.
+
+Related evidence:
+
+- [Windows Network Monitoring Dashboard](screenshots/phase-2-windows-network-monitoring-dashboard.png)
+
+---
+
+### 7. Agent Health Monitoring
 
 During testing, the Windows Elastic Agent stopped and had to be restarted. This was documented as an operational risk because endpoint visibility depends on agent health.
 
@@ -172,10 +212,10 @@ Related evidence:
 | CISSP Domain | Phase 2 Evidence |
 |---|---|
 | Domain 1: Security and Risk Management | Risk register, governance policy, visibility gap documentation |
-| Domain 4: Communication and Network Security | Nmap-related network telemetry review and network monitoring |
-| Domain 5: Identity and Access Management | Event ID 4625 failed logons and Event ID 4624 successful logons |
-| Domain 6: Security Assessment and Testing | Detection validation, control testing, evidence review |
-| Domain 7: Security Operations | SIEM monitoring, incident response, Fleet health, evidence collection |
+| Domain 4: Communication and Network Security | Nmap-related network telemetry review, network monitoring dashboard, and network visibility validation |
+| Domain 5: Identity and Access Management | Event ID 4625 failed logons, Event ID 4624 successful logons, and authentication dashboard monitoring |
+| Domain 6: Security Assessment and Testing | Detection validation, control testing, dashboard validation, evidence review |
+| Domain 7: Security Operations | SIEM monitoring, dashboards, incident response, Fleet health, evidence collection |
 
 ---
 
@@ -198,6 +238,7 @@ These findings are documented in the [Risk Register](risk-management/risk-regist
 
 - A Windows endpoint greatly improves the realism of the SIEM lab.
 - Failed logon events alone are not enough; successful logons must also be reviewed.
+- Dashboards make authentication and network monitoring easier to review.
 - Agent health is critical because stopped agents create monitoring blind spots.
 - Nmap activity may not always appear clearly as Nmap in Discover; correlation with source IP, time, and endpoint telemetry is required.
 - Visibility gaps should be documented as risks and used to improve logging controls.
@@ -213,6 +254,7 @@ Relevant activity areas include:
 
 - Windows endpoint monitoring
 - Authentication event analysis
+- Dashboard creation
 - Incident response playbook development
 - Risk register creation
 - Governance policy development
@@ -226,6 +268,6 @@ Only actual time spent performing and documenting the Phase 2 work should be cla
 
 ## Conclusion
 
-Phase 2 successfully expands the Elastic SIEM lab into a CISSP-aligned risk management and incident response project. The addition of the Windows Enterprise VM, authentication monitoring, Nmap-related network telemetry review, risk register, governance policy, and detection-control matrix demonstrates practical security operations work beyond the original SIEM build.
+Phase 2 successfully expands the Elastic SIEM lab into a CISSP-aligned risk management and incident response project. The addition of the Windows Enterprise VM, authentication monitoring, dashboard creation, Nmap-related network telemetry review, risk register, governance policy, and detection-control matrix demonstrates practical security operations work beyond the original SIEM build.
 
 This phase is a separate project expansion because it uses the existing SIEM environment to perform new security operations, risk management, governance, and incident response activities.
