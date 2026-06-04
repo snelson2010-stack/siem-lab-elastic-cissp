@@ -4,7 +4,7 @@
 
 This document explains the Windows Enterprise VM added during Phase 2 of the CISSP Risk Management and Incident Response Expansion.
 
-The Windows Enterprise VM was added as a new monitored endpoint to expand the original Elastic SIEM lab beyond Linux-focused monitoring. This gives the lab a more realistic enterprise-style environment with Windows endpoint visibility, centralized agent management, Windows security event detection, and network telemetry collection.
+The Windows Enterprise VM was added as a new monitored endpoint to expand the original Elastic SIEM lab beyond Linux-focused monitoring. This gives the lab a more realistic enterprise-style environment with Windows endpoint visibility, centralized agent management, Windows security event detection, dashboard monitoring, and network telemetry collection.
 
 ---
 
@@ -17,6 +17,7 @@ The Windows Enterprise VM was added as a new monitored endpoint to expand the or
 | Fleet | Centralized agent management |
 | Elasticsearch | Event storage and indexing |
 | Kibana Discover | Event search and investigation |
+| Kibana Dashboards | Windows authentication and network monitoring |
 
 ---
 
@@ -33,6 +34,8 @@ Phase 2 adds a Windows Enterprise VM to demonstrate:
 - Failed Windows logon detection
 - Successful Windows logon monitoring
 - Windows network telemetry review
+- Windows authentication dashboarding
+- Windows network monitoring dashboarding
 - Evidence collection for incident response
 - CISSP domain mapping
 
@@ -49,6 +52,8 @@ This makes Phase 2 a new project expansion rather than a repeat of the original 
 | Windows failed logon detection | [phase-2-windows-failed-logon-4625-discover.png](screenshots/phase-2-windows-failed-logon-4625-discover.png) | Failed Windows logon events are visible in Elastic and can support incident response |
 | Windows successful logon monitoring | [phase-2-windows-successful-logon-4624-discover.png](screenshots/phase-2-windows-successful-logon-4624-discover.png) | Successful Windows logon events are visible in Elastic for account activity review |
 | Windows network telemetry during Nmap-related testing | [phase-2-nmap-related-windows-network-events.png](screenshots/phase-2-nmap-related-windows-network-events.png) | Windows endpoint network events are visible during reconnaissance testing |
+| Windows authentication dashboard | [phase-2-windows-authentication-dashboard.png](screenshots/phase-2-windows-authentication-dashboard.png) | Dashboard view of failed logons, successful logons, user activity, and authentication trends |
+| Windows network monitoring dashboard | [phase-2-windows-network-monitoring-dashboard.png](screenshots/phase-2-windows-network-monitoring-dashboard.png) | Dashboard view of Windows endpoint network telemetry |
 | Windows agent details and policy evidence | [windows-agent-policy-or-agent-details.png](screenshots/windows-agent-policy-or-agent-details.png) | Shows the Windows endpoint policy and configuration details |
 
 ---
@@ -71,9 +76,17 @@ This makes Phase 2 a new project expansion rather than a repeat of the original 
 
 ![Windows successful logon Event ID 4624 in Kibana Discover](screenshots/phase-2-windows-successful-logon-4624-discover.png)
 
+### Windows Authentication Monitoring Dashboard
+
+![Windows authentication monitoring dashboard](screenshots/phase-2-windows-authentication-dashboard.png)
+
 ### Windows Network Telemetry During Nmap-Related Testing
 
 ![Windows network telemetry during Nmap-related testing](screenshots/phase-2-nmap-related-windows-network-events.png)
+
+### Windows Network Monitoring Dashboard
+
+![Windows network monitoring dashboard](screenshots/phase-2-windows-network-monitoring-dashboard.png)
 
 ### Windows Agent Details and Policy Evidence
 
@@ -121,11 +134,24 @@ This confirms that the lab can monitor successful authentication events as well 
 
 ---
 
+## Dashboard Monitoring
+
+Two dashboards were created during Phase 2:
+
+1. **Phase 2 - Windows Authentication Monitoring**
+2. **Phase 2 - Windows Network Monitoring**
+
+The authentication dashboard provides a consolidated view of failed logons, successful logons, actual user logons, top authentication users, authentication activity over time, and Windows event categories.
+
+The network dashboard provides a view of Windows endpoint network telemetry used for reconnaissance review and network monitoring.
+
+---
+
 ## Network Telemetry and Reconnaissance Testing
 
 Additional testing was performed using Nmap from the Kali attacker VM.
 
-Windows endpoint network telemetry was reviewed in Kibana Discover to identify activity associated with the testing window.
+Windows endpoint network telemetry was reviewed in Kibana Discover and dashboard panels to identify activity associated with the testing window.
 
 The collected evidence demonstrates:
 
@@ -145,8 +171,8 @@ This provides a practical example of detection validation and security operation
 | Domain 1: Security and Risk Management | Supports risk documentation for weak authentication and endpoint visibility |
 | Domain 4: Communication and Network Security | Supports network monitoring and reconnaissance analysis |
 | Domain 5: Identity and Access Management | Provides evidence of failed and successful authentication monitoring |
-| Domain 6: Security Assessment and Testing | Validates that Windows security events can be generated, collected, and reviewed |
-| Domain 7: Security Operations | Supports monitoring, detection, investigation, and evidence collection |
+| Domain 6: Security Assessment and Testing | Validates that Windows security events can be generated, collected, reviewed, and visualized |
+| Domain 7: Security Operations | Supports monitoring, detection, dashboarding, investigation, and evidence collection |
 
 ---
 
@@ -160,11 +186,12 @@ Examples include:
 2. Successful Windows authentication events (Event ID 4624)
 3. Network reconnaissance review and validation
 4. Endpoint investigation using Kibana Discover
-5. Evidence collection through screenshots and timelines
-6. Mapping findings to CISSP domains and security controls
+5. Dashboard-based security monitoring
+6. Evidence collection through screenshots and timelines
+7. Mapping findings to CISSP domains and security controls
 
 ---
 
 ## Conclusion
 
-The Windows Enterprise VM is the primary new technical asset added during Phase 2. It expands the SIEM lab into Windows endpoint monitoring and provides direct evidence for authentication monitoring, network telemetry analysis, security operations, incident response, and CISSP-aligned documentation.
+The Windows Enterprise VM is the primary new technical asset added during Phase 2. It expands the SIEM lab into Windows endpoint monitoring and provides direct evidence for authentication monitoring, network telemetry analysis, dashboard-based security operations, incident response, and CISSP-aligned documentation.
