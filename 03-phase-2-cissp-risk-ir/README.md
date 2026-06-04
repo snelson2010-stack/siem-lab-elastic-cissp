@@ -95,6 +95,7 @@ New work completed during Phase 2 includes:
 - Governance policy development
 - CISSP control mapping
 - Detection-to-control matrix creation
+- Windows authentication and network monitoring dashboards
 
 ---
 
@@ -103,12 +104,15 @@ New work completed during Phase 2 includes:
 | Evidence | Link |
 |---|---|
 | Windows Enterprise VM Evidence Summary | [windows-enterprise-vm-evidence.md](windows-enterprise-vm-evidence.md) |
+| Phase 2 Summary Report | [phase-2-summary-report.md](phase-2-summary-report.md) |
 | Screenshot Evidence Index | [screenshots/evidence-index.md](screenshots/evidence-index.md) |
 | Elastic Agent Healthy in PowerShell | [windows-agent-powershell-healthy.png](screenshots/windows-agent-powershell-healthy.png) |
 | Windows Endpoint Healthy in Fleet | [fleet-windows-agent-healthy.png](screenshots/fleet-windows-agent-healthy.png) |
 | Windows Failed Logon Event ID 4625 | [phase-2-windows-failed-logon-4625-discover.png](screenshots/phase-2-windows-failed-logon-4625-discover.png) |
 | Windows Successful Logon Event ID 4624 | [phase-2-windows-successful-logon-4624-discover.png](screenshots/phase-2-windows-successful-logon-4624-discover.png) |
 | Nmap-Related Windows Network Events | [phase-2-nmap-related-windows-network-events.png](screenshots/phase-2-nmap-related-windows-network-events.png) |
+| Windows Authentication Dashboard | [phase-2-windows-authentication-dashboard.png](screenshots/phase-2-windows-authentication-dashboard.png) |
+| Windows Network Monitoring Dashboard | [phase-2-windows-network-monitoring-dashboard.png](screenshots/phase-2-windows-network-monitoring-dashboard.png) |
 | Windows Agent Policy or Details | [windows-agent-policy-or-agent-details.png](screenshots/windows-agent-policy-or-agent-details.png) |
 
 ## Key Evidence Screenshots
@@ -125,9 +129,17 @@ New work completed during Phase 2 includes:
 
 ![Windows successful logon Event ID 4624](screenshots/phase-2-windows-successful-logon-4624-discover.png)
 
+### Windows Authentication Monitoring Dashboard
+
+![Windows authentication monitoring dashboard](screenshots/phase-2-windows-authentication-dashboard.png)
+
 ### Nmap-Related Windows Network Events
 
 ![Nmap-related Windows network events](screenshots/phase-2-nmap-related-windows-network-events.png)
+
+### Windows Network Monitoring Dashboard
+
+![Windows network monitoring dashboard](screenshots/phase-2-windows-network-monitoring-dashboard.png)
 
 ---
 
