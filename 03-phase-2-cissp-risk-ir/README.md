@@ -27,6 +27,7 @@ This allows the SIEM environment to collect and analyze:
 - Windows Security Logs
 - Authentication Events
 - Failed Logon Attempts
+- Successful Logon Events
 - Account Management Events
 - Privilege Use Events
 - Endpoint Activity
@@ -106,6 +107,7 @@ New work completed during Phase 2 includes:
 | Elastic Agent Healthy in PowerShell | [windows-agent-powershell-healthy.png](screenshots/windows-agent-powershell-healthy.png) |
 | Windows Endpoint Healthy in Fleet | [fleet-windows-agent-healthy.png](screenshots/fleet-windows-agent-healthy.png) |
 | Windows Failed Logon Event ID 4625 | [phase-2-windows-failed-logon-4625-discover.png](screenshots/phase-2-windows-failed-logon-4625-discover.png) |
+| Windows Successful Logon Event ID 4624 | [phase-2-windows-successful-logon-4624-discover.png](screenshots/phase-2-windows-successful-logon-4624-discover.png) |
 | Nmap-Related Windows Network Events | [phase-2-nmap-related-windows-network-events.png](screenshots/phase-2-nmap-related-windows-network-events.png) |
 | Windows Agent Policy or Details | [windows-agent-policy-or-agent-details.png](screenshots/windows-agent-policy-or-agent-details.png) |
 
@@ -118,6 +120,10 @@ New work completed during Phase 2 includes:
 ### Failed Windows Logon Event ID 4625
 
 ![Windows failed logon Event ID 4625](screenshots/phase-2-windows-failed-logon-4625-discover.png)
+
+### Successful Windows Logon Event ID 4624
+
+![Windows successful logon Event ID 4624](screenshots/phase-2-windows-successful-logon-4624-discover.png)
 
 ### Nmap-Related Windows Network Events
 
@@ -142,6 +148,7 @@ New work completed during Phase 2 includes:
 ## Domain 5 – Identity & Access Management
 
 - Failed Login Monitoring
+- Successful Login Monitoring
 - Account Activity Monitoring
 - Privileged Access Monitoring
 
