@@ -43,11 +43,35 @@ This makes Phase 2 a new project expansion rather than a repeat of the original 
 
 | Evidence | Screenshot | What It Proves |
 |---|---|---|
-| Elastic Agent healthy in PowerShell | `screenshots/windows-agent-powershell-healthy.png` | Elastic Agent is installed, running, and connected on the Windows VM |
-| Windows endpoint healthy in Fleet | `screenshots/fleet-windows-agent-healthy.png` | The Windows VM is enrolled and centrally managed through Fleet |
-| Windows failed logon detection | `screenshots/phase-2-windows-failed-logon-4625-discover.png` | Failed Windows logon events are visible in Elastic and can support incident response |
-| Windows network telemetry during Nmap-related testing | `screenshots/phase-2-nmap-related-windows-network-events.png` | Windows endpoint network events are visible during reconnaissance testing |
-| Windows agent details and policy evidence | `screenshots/windows-agent-policy-or-agent-details.png` | Shows the Windows endpoint policy and configuration details |
+| Elastic Agent healthy in PowerShell | [windows-agent-powershell-healthy.png](screenshots/windows-agent-powershell-healthy.png) | Elastic Agent is installed, running, and connected on the Windows VM |
+| Windows endpoint healthy in Fleet | [fleet-windows-agent-healthy.png](screenshots/fleet-windows-agent-healthy.png) | The Windows VM is enrolled and centrally managed through Fleet |
+| Windows failed logon detection | [phase-2-windows-failed-logon-4625-discover.png](screenshots/phase-2-windows-failed-logon-4625-discover.png) | Failed Windows logon events are visible in Elastic and can support incident response |
+| Windows network telemetry during Nmap-related testing | [phase-2-nmap-related-windows-network-events.png](screenshots/phase-2-nmap-related-windows-network-events.png) | Windows endpoint network events are visible during reconnaissance testing |
+| Windows agent details and policy evidence | [windows-agent-policy-or-agent-details.png](screenshots/windows-agent-policy-or-agent-details.png) | Shows the Windows endpoint policy and configuration details |
+
+---
+
+## Evidence Screenshots
+
+### Elastic Agent Healthy in PowerShell
+
+![Elastic Agent healthy in PowerShell](screenshots/windows-agent-powershell-healthy.png)
+
+### Windows Endpoint Healthy in Fleet
+
+![Windows endpoint healthy in Fleet](screenshots/fleet-windows-agent-healthy.png)
+
+### Windows Failed Logon Detection
+
+![Windows failed logon Event ID 4625 in Kibana Discover](screenshots/phase-2-windows-failed-logon-4625-discover.png)
+
+### Windows Network Telemetry During Nmap-Related Testing
+
+![Windows network telemetry during Nmap-related testing](screenshots/phase-2-nmap-related-windows-network-events.png)
+
+### Windows Agent Details and Policy Evidence
+
+![Windows agent details and policy evidence](screenshots/windows-agent-policy-or-agent-details.png)
 
 ---
 
